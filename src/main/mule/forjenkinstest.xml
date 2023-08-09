@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1fdaab1c-c505-45a6-bdcd-62ced4a2d369" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="forjenkinstestFlow" doc:id="e9c24ab8-e43d-4f3b-8544-d0ce25055784" >
+		<http:listener doc:name="Listener" doc:id="c55c6d69-ffab-4ec2-b6c3-7db0886599e6" config-ref="HTTP_Listener_config" path="/hi"/>
+		<ee:transform doc:name="Transform Message" doc:id="5c788359-43e0-46b1-a7a9-6b10deb0b1d3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:"hiiiii jenkins"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6bcae774-17eb-4ba3-bd5d-f8481608d3d9" message="hello"/>
+	</flow>
+</mule>
